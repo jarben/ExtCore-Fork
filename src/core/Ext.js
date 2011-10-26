@@ -2,7 +2,7 @@
  * Ext Core Library 3.0
  * http://extjs.com/
  * Copyright(c) 2006-2009, Ext JS, LLC.
- * 
+ *
  * MIT Licensed - http://extjs.com/license/mit.txt
  */
 
@@ -137,6 +137,15 @@ Ext.apply = function(o, c, defaults){
          * @type Boolean
          */
         USE_NATIVE_JSON : false,
+
+        /**
+         * Redirect user to url
+         * @param {String} url Url where user will be redirected.
+         */
+        redirect : function(url){
+        	document.location.href = url;
+        },
+
 
         /**
          * Copies all the properties of config to obj if they don't already exist.
