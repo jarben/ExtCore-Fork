@@ -13,6 +13,9 @@
             text: 'TaskMgr.js',
             path: 'src/util/'
         },{
+            text: 'RussianText.js',
+            path: 'src/util/'
+        },{
             text: 'DelayedTask.js',
             path: 'src/util/'
         },{
