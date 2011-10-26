@@ -1,10 +1,3 @@
-/*!
- * Ext Core Library 3.0
- * http://extjs.com/
- * Copyright(c) 2006-2009, Ext JS, LLC.
- * 
- * MIT Licensed - http://extjs.com/license/mit.txt
- */
 /**
  * @class Ext.util.TaskRunner
  * Provides the ability to execute one or more arbitrary tasks in a multithreaded

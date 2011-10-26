@@ -1,10 +1,3 @@
-/*!
- * Ext Core Library 3.0
- * http://extjs.com/
- * Copyright(c) 2006-2009, Ext JS, LLC.
- * 
- * MIT Licensed - http://extjs.com/license/mit.txt
- */
 /*
  * This is code is also distributed under MIT license for use
  * with jQuery and prototype JavaScript libraries.

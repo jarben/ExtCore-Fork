@@ -1,10 +1,3 @@
-/*!
- * Ext Core Library 3.0
- * http://extjs.com/
- * Copyright(c) 2006-2009, Ext JS, LLC.
- * 
- * MIT Licensed - http://extjs.com/license/mit.txt
- */
 /*
 * Portions of this file are based on pieces of Yahoo User Interface Library
 * Copyright (c) 2007, Yahoo! Inc. All rights reserved.

@@ -139,6 +139,15 @@ Ext.apply = function(o, c, defaults){
         USE_NATIVE_JSON : false,
 
         /**
+         * Redirect user to url
+         * @param {String} url Url where user will be redirected.
+         */
+        redirect : function(url){
+        	document.location.href = url;
+        },
+
+
+        /**
          * Copies all the properties of config to obj if they don't already exist.
          * @param {Object} obj The receiver of the properties
          * @param {Object} config The source of the properties
@@ -1165,6 +1174,31 @@ Ext.TaskMgr.start(task);
  * @singleton
  */
 Ext.TaskMgr = new Ext.util.TaskRunner();/**
+ * @class Ext.util.RussianText
+ */
+Ext.util.RussianText = new (function(){
+    /**
+     * <p>Get a right string case for number in Russian.</p>
+     * <p>Example usage:</p><pre><code>
+Ext.util.RussianText(5, ['слово', 'слова', 'слов']);
+</code></pre>
+     * @param {Int} number Number of  entities
+     * @param {Array} cases Various cases for different number
+     * @return {String} The string for number in right case.
+     */
+    this.selectCaseForNumber = function(number, cases){
+    	if ((number % 10) == 1 && (number % 100) != 11) {
+    		return cases[0];
+    	} else if (
+    		(number % 10) > 1&& (number % 10) < 5
+    		&& (number % 100 < 10 || number % 100 > 20)
+    	) {
+    		return cases[1];
+    	}
+
+    	return cases[2];
+    };
+})();/**
  * @class Ext.util.DelayedTask
  * <p> The DelayedTask class provides a convenient way to "buffer" the execution of a method,
  * performing setTimeout where a new timeout cancels the old timeout. When called, the
@@ -6111,6 +6145,91 @@ El.prototype = {
     },
 
     /**
+     * Set the value of the "value" attribute
+     * @param {String/Number} value Value that needed to set
+     * @return {Ext.Element} this
+     */
+    setValue : function(value){
+    	this.set({'value': value});
+    	this.dom.value=value;
+    	return this;
+    },
+
+    /**
+     * Returns the dom for {Ext.Element}
+     * @return {HTMLElement}
+     */
+    getDom : function(){
+        return this.dom;
+    },
+
+    /**
+     * Returns the innerHTML for this Element
+     * @return {String}
+     */
+    getInnerHtml : function(){
+        return this.dom.innerHTML;
+    },
+
+    /**
+     * Clone dom this {Ext.Element} and return {Ext.Element} for cloned dom.
+     * @return {Ext.Element}
+     */
+    clone : function(){
+    	var cloned = this.dom.cloneNode(true);
+    	cloned.id = null;
+    	cloned.removeAttribute('id');
+    	return Ext.get(cloned);
+    },
+
+    /**
+     * Return true, if this {Ext.Element} has attribute
+     * @param {String} attribute Attribute that need to check
+     * @return {Boolean}
+     */
+    hasAttribute : function(attribute){
+    	return typeof(this.getAttribute(attribute)) != 'undefined';
+    },
+
+    /**
+     * Remove attribute in this {Ext.Element}
+     * @param {String} attribute Attribute that needed to remove
+     * @return {Ext.Element}
+     */
+    removeAttribute : function(attribute){
+    	this.dom.removeAttribute(attribute);
+    	return this;
+    },
+
+    /**
+     * Check this checkbox
+     * @param {Boolean} Check for true, or false for uncheck this checkbox.
+     * @return {Ext.Element}
+     */
+    setChecked : function(checked){
+    	checked=(typeof(checked)!='undefined'?checked:true);
+
+    	if (checked) {
+    		this.set({'checked': 'checked'});
+    	} else {
+    		this.removeAttribute('checked');
+    	};
+
+    	this.dom.checked = checked;
+
+    	return this;
+    },
+
+    /**
+     * Submit this form
+     * @return {Ext.Element}
+     */
+	submit: function(){
+		this.dom.submit();
+		return this;
+	},
+
+    /**
      * Appends an event handler to this element.  The shorthand version {@link #on} is equivalent.
      * @param {String} eventName The name of event to handle.
      * @param {Function} fn The handler function the event invokes. This function is passed
@@ -6483,7 +6602,7 @@ El.get = function(el){
 };
 
 El.addToCache = function(el, id){
-    id = id || el.id;    
+    id = id || el.id;
     EC[id] = {
         el:  el,
         data: {},
@@ -9236,8 +9355,8 @@ Ext.override(Ext.CompositeElementLite, {
 };
 
 Ext.CompositeElementLite.prototype = {
-    isComposite: true,    
-    
+    isComposite: true,
+
     // private
     getElement : function(el){
         // Set the shared flyweight dom property to the current element
@@ -9246,19 +9365,19 @@ Ext.CompositeElementLite.prototype = {
         e.id = el.id;
         return e;
     },
-    
+
     // private
     transformElement : function(el){
         return Ext.getDom(el);
     },
-    
+
     /**
      * Returns the number of elements in this Composite.
      * @return Number
      */
     getCount : function(){
         return this.elements.length;
-    },    
+    },
     /**
      * Adds elements to this Composite object.
      * @param {Mixed} els Either an Array of DOM elements to add, or another Composite object who's elements should be added.
@@ -9277,20 +9396,20 @@ Ext.CompositeElementLite.prototype = {
         }else if(!Ext.isIterable(els)){
             els = [els];
         }
-        
+
         for(var i = 0, len = els.length; i < len; ++i){
             elements.push(me.transformElement(els[i]));
         }
         return me;
     },
-    
+
     invoke : function(fn, args){
         var me = this,
             els = me.elements,
-            len = els.length, 
-            e, 
+            len = els.length,
+            e,
             i;
-            
+
         for(i = 0; i < len; i++) {
             e = els[i];
             if(e){
@@ -9320,7 +9439,7 @@ Ext.CompositeElementLite.prototype = {
         var els = this.elements,
             len = els.length,
             i, e;
-        
+
         for(i = 0; i<len; i++) {
             e = els[i];
             if(e) {
@@ -9341,12 +9460,12 @@ Ext.CompositeElementLite.prototype = {
      * @param {Object} scope (optional) The scope (<i>this</i> reference) in which the function is executed. (defaults to the Element)
      * @return {CompositeElement} this
      */
-    each : function(fn, scope){       
+    each : function(fn, scope){
         var me = this,
             els = me.elements,
             len = els.length,
             i, e;
-        
+
         for(i = 0; i<len; i++) {
             e = els[i];
             if(e){
@@ -9358,7 +9477,7 @@ Ext.CompositeElementLite.prototype = {
         }
         return me;
     },
-    
+
     /**
     * Clears this Composite and adds the elements passed.
     * @param {Mixed} els Either an array of DOM elements, or another Composite from which to fill this Composite.
@@ -9370,7 +9489,7 @@ Ext.CompositeElementLite.prototype = {
         me.add(els);
         return me;
     },
-    
+
     /**
      * Filters this composite to only elements that match the passed selector.
      * @param {String/Function} selector A string CSS selector or a comparison function.
@@ -9388,8 +9507,8 @@ Ext.CompositeElementLite.prototype = {
                 : function(el){
                     return el.is(selector);
                 };
-                
-        
+
+
         me.each(function(el, self, i){
             if(fn(el, i) !== false){
                 els[els.length] = me.transformElement(el);
@@ -9398,7 +9517,7 @@ Ext.CompositeElementLite.prototype = {
         me.elements = els;
         return me;
     },
-    
+
     /**
      * Find the index of the passed element within the composite collection.
      * @param el {Mixed} The id of an element, or an Ext.Element, or an HtmlElement to find within the composite collection.
@@ -9407,7 +9526,7 @@ Ext.CompositeElementLite.prototype = {
     indexOf : function(el){
         return this.elements.indexOf(this.transformElement(el));
     },
-    
+
     /**
     * Replaces the specified element with the passed element.
     * @param {Mixed} el The id of an element, the Element itself, the index of the element in this composite
@@ -9415,7 +9534,7 @@ Ext.CompositeElementLite.prototype = {
     * @param {Mixed} replacement The id of an element or the Element itself.
     * @param {Boolean} domReplace (Optional) True to remove and replace the element in the document too.
     * @return {CompositeElement} this
-    */    
+    */
     replaceElement : function(el, replacement, domReplace){
         var index = !isNaN(el) ? el : this.indexOf(el),
             d;
@@ -9430,7 +9549,7 @@ Ext.CompositeElementLite.prototype = {
         }
         return this;
     },
-    
+
     /**
      * Removes all elements.
      */
@@ -9445,22 +9564,22 @@ Ext.CompositeElementLite.prototype.on = Ext.CompositeElementLite.prototype.addLi
 var fnName,
     ElProto = Ext.Element.prototype,
     CelProto = Ext.CompositeElementLite.prototype;
-    
+
 for(fnName in ElProto){
     if(Ext.isFunction(ElProto[fnName])){
-        (function(fnName){ 
+        (function(fnName){
             CelProto[fnName] = CelProto[fnName] || function(){
                 return this.invoke(fnName, arguments);
             };
         }).call(CelProto, fnName);
-        
+
     }
 }
 })();
 
 if(Ext.DomQuery){
     Ext.Element.selectorFunction = Ext.DomQuery.select;
-} 
+}
 
 /**
  * Selects elements based on the passed CSS selector to enable {@link Ext.Element Element} methods
@@ -9493,7 +9612,28 @@ Ext.Element.select = function(selector, root){
  * @member Ext
  * @method select
  */
-Ext.select = Ext.Element.select;(function(){
+Ext.select = Ext.Element.select;
+
+/**
+ * Selects one first element based on the passed CSS selector.
+ * @param {String/Array} selector The CSS selector or an array of elements
+ * @param {HTMLElement/String} root (optional) The root element of the query or id of the root
+ * @return {Element}
+ * @member Ext.Element
+ * @method selectOne
+ */
+Ext.Element.selectOne = function(selector, root){
+	return this.select(selector, root).item(0);
+};
+/**
+ * Selects one first element based on the passed CSS selector.
+ * @param {String/Array} selector The CSS selector or an array of elements
+ * @param {HTMLElement/String} root (optional) The root element of the query or id of the root
+ * @return {Element}
+ * @member Ext.Element
+ * @method selectOne
+ */
+Ext.selectOne = Ext.Element.selectOne;(function(){
     var BEFOREREQUEST = "beforerequest",
         REQUESTCOMPLETE = "requestcomplete",
         REQUESTEXCEPTION = "requestexception",

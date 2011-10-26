@@ -1,10 +1,3 @@
-/*!
- * Ext Core Library 3.0
- * http://extjs.com/
- * Copyright(c) 2006-2009, Ext JS, LLC.
- * 
- * MIT Licensed - http://extjs.com/license/mit.txt
- */
 Ext.ns('Ext.ux');
 
 Ext.ux.Carousel = Ext.extend(Ext.util.Observable, {
