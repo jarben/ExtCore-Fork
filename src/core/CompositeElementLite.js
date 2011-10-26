@@ -2,7 +2,7 @@
  * Ext Core Library 3.0
  * http://extjs.com/
  * Copyright(c) 2006-2009, Ext JS, LLC.
- * 
+ *
  * MIT Licensed - http://extjs.com/license/mit.txt
  */
 /**
@@ -56,8 +56,8 @@ Ext.override(Ext.CompositeElementLite, {
 };
 
 Ext.CompositeElementLite.prototype = {
-    isComposite: true,    
-    
+    isComposite: true,
+
     // private
     getElement : function(el){
         // Set the shared flyweight dom property to the current element
@@ -66,19 +66,19 @@ Ext.CompositeElementLite.prototype = {
         e.id = el.id;
         return e;
     },
-    
+
     // private
     transformElement : function(el){
         return Ext.getDom(el);
     },
-    
+
     /**
      * Returns the number of elements in this Composite.
      * @return Number
      */
     getCount : function(){
         return this.elements.length;
-    },    
+    },
     /**
      * Adds elements to this Composite object.
      * @param {Mixed} els Either an Array of DOM elements to add, or another Composite object who's elements should be added.
@@ -97,20 +97,20 @@ Ext.CompositeElementLite.prototype = {
         }else if(!Ext.isIterable(els)){
             els = [els];
         }
-        
+
         for(var i = 0, len = els.length; i < len; ++i){
             elements.push(me.transformElement(els[i]));
         }
         return me;
     },
-    
+
     invoke : function(fn, args){
         var me = this,
             els = me.elements,
-            len = els.length, 
-            e, 
+            len = els.length,
+            e,
             i;
-            
+
         for(i = 0; i < len; i++) {
             e = els[i];
             if(e){
@@ -140,7 +140,7 @@ Ext.CompositeElementLite.prototype = {
         var els = this.elements,
             len = els.length,
             i, e;
-        
+
         for(i = 0; i<len; i++) {
             e = els[i];
             if(e) {
@@ -161,12 +161,12 @@ Ext.CompositeElementLite.prototype = {
      * @param {Object} scope (optional) The scope (<i>this</i> reference) in which the function is executed. (defaults to the Element)
      * @return {CompositeElement} this
      */
-    each : function(fn, scope){       
+    each : function(fn, scope){
         var me = this,
             els = me.elements,
             len = els.length,
             i, e;
-        
+
         for(i = 0; i<len; i++) {
             e = els[i];
             if(e){
@@ -178,7 +178,7 @@ Ext.CompositeElementLite.prototype = {
         }
         return me;
     },
-    
+
     /**
     * Clears this Composite and adds the elements passed.
     * @param {Mixed} els Either an array of DOM elements, or another Composite from which to fill this Composite.
@@ -190,7 +190,7 @@ Ext.CompositeElementLite.prototype = {
         me.add(els);
         return me;
     },
-    
+
     /**
      * Filters this composite to only elements that match the passed selector.
      * @param {String/Function} selector A string CSS selector or a comparison function.
@@ -208,8 +208,8 @@ Ext.CompositeElementLite.prototype = {
                 : function(el){
                     return el.is(selector);
                 };
-                
-        
+
+
         me.each(function(el, self, i){
             if(fn(el, i) !== false){
                 els[els.length] = me.transformElement(el);
@@ -218,7 +218,7 @@ Ext.CompositeElementLite.prototype = {
         me.elements = els;
         return me;
     },
-    
+
     /**
      * Find the index of the passed element within the composite collection.
      * @param el {Mixed} The id of an element, or an Ext.Element, or an HtmlElement to find within the composite collection.
@@ -227,7 +227,7 @@ Ext.CompositeElementLite.prototype = {
     indexOf : function(el){
         return this.elements.indexOf(this.transformElement(el));
     },
-    
+
     /**
     * Replaces the specified element with the passed element.
     * @param {Mixed} el The id of an element, the Element itself, the index of the element in this composite
@@ -235,7 +235,7 @@ Ext.CompositeElementLite.prototype = {
     * @param {Mixed} replacement The id of an element or the Element itself.
     * @param {Boolean} domReplace (Optional) True to remove and replace the element in the document too.
     * @return {CompositeElement} this
-    */    
+    */
     replaceElement : function(el, replacement, domReplace){
         var index = !isNaN(el) ? el : this.indexOf(el),
             d;
@@ -250,7 +250,7 @@ Ext.CompositeElementLite.prototype = {
         }
         return this;
     },
-    
+
     /**
      * Removes all elements.
      */
@@ -265,22 +265,22 @@ Ext.CompositeElementLite.prototype.on = Ext.CompositeElementLite.prototype.addLi
 var fnName,
     ElProto = Ext.Element.prototype,
     CelProto = Ext.CompositeElementLite.prototype;
-    
+
 for(fnName in ElProto){
     if(Ext.isFunction(ElProto[fnName])){
-        (function(fnName){ 
+        (function(fnName){
             CelProto[fnName] = CelProto[fnName] || function(){
                 return this.invoke(fnName, arguments);
             };
         }).call(CelProto, fnName);
-        
+
     }
 }
 })();
 
 if(Ext.DomQuery){
     Ext.Element.selectorFunction = Ext.DomQuery.select;
-} 
+}
 
 /**
  * Selects elements based on the passed CSS selector to enable {@link Ext.Element Element} methods
@@ -314,3 +314,24 @@ Ext.Element.select = function(selector, root){
  * @method select
  */
 Ext.select = Ext.Element.select;
+
+/**
+ * Selects one first element based on the passed CSS selector.
+ * @param {String/Array} selector The CSS selector or an array of elements
+ * @param {HTMLElement/String} root (optional) The root element of the query or id of the root
+ * @return {Element}
+ * @member Ext.Element
+ * @method selectOne
+ */
+Ext.Element.selectOne = function(selector, root){
+	return this.select(selector, root).item(0);
+};
+/**
+ * Selects one first element based on the passed CSS selector.
+ * @param {String/Array} selector The CSS selector or an array of elements
+ * @param {HTMLElement/String} root (optional) The root element of the query or id of the root
+ * @return {Element}
+ * @member Ext.Element
+ * @method selectOne
+ */
+Ext.selectOne = Ext.Element.selectOne;
