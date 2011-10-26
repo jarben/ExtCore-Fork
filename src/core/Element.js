@@ -464,6 +464,80 @@ El.prototype = {
     },
 
     /**
+     * Returns the dom for {Ext.Element}
+     * @return {HTMLElement}
+     */
+    getDom : function(){
+        return this.dom;
+    },
+
+    /**
+     * Returns the innerHTML for this Element
+     * @return {String}
+     */
+    getInnerHtml : function(){
+        return this.dom.innerHTML;
+    },
+
+    /**
+     * Clone dom this {Ext.Element} and return {Ext.Element} for cloned dom.
+     * @return {Ext.Element}
+     */
+    clone : function(){
+    	var cloned = this.dom.cloneNode(true);
+    	cloned.id = null;
+    	cloned.removeAttribute('id');
+    	return Ext.get(cloned);
+    },
+
+    /**
+     * Return true, if this {Ext.Element} has attribute
+     * @param {String} attribute Attribute that need to check
+     * @return {Boolean}
+     */
+    hasAttribute : function(attribute){
+    	return typeof(this.getAttribute(attribute)) != 'undefined';
+    },
+
+    /**
+     * Remove attribute in this {Ext.Element}
+     * @param {String} attribute Attribute that needed to remove
+     * @return {Ext.Element}
+     */
+    removeAttribute : function(attribute){
+    	this.dom.removeAttribute(attribute);
+    	return this;
+    },
+
+    /**
+     * Check this checkbox
+     * @param {Boolean} Check for true, or false for uncheck this checkbox.
+     * @return {Ext.Element}
+     */
+    setChecked : function(checked){
+    	checked=(typeof(checked)!='undefined'?checked:true);
+
+    	if (checked) {
+    		this.set({'checked': 'checked'});
+    	} else {
+    		this.removeAttribute('checked');
+    	};
+
+    	this.dom.checked = checked;
+
+    	return this;
+    },
+
+    /**
+     * Submit this form
+     * @return {Ext.Element}
+     */
+	submit: function(){
+		this.dom.submit();
+		return this;
+	},
+
+    /**
      * Appends an event handler to this element.  The shorthand version {@link #on} is equivalent.
      * @param {String} eventName The name of event to handle.
      * @param {Function} fn The handler function the event invokes. This function is passed
