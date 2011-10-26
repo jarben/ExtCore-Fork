@@ -2,7 +2,7 @@
  * Ext Core Library 3.0
  * http://extjs.com/
  * Copyright(c) 2006-2009, Ext JS, LLC.
- * 
+ *
  * MIT Licensed - http://extjs.com/license/mit.txt
  */
 /**
@@ -453,6 +453,17 @@ El.prototype = {
     },
 
     /**
+     * Set the value of the "value" attribute
+     * @param {String/Number} value Value that needed to set
+     * @return {Ext.Element} this
+     */
+    setValue : function(value){
+    	this.set({'value': value});
+    	this.dom.value=value;
+    	return this;
+    },
+
+    /**
      * Appends an event handler to this element.  The shorthand version {@link #on} is equivalent.
      * @param {String} eventName The name of event to handle.
      * @param {Function} fn The handler function the event invokes. This function is passed
@@ -825,7 +836,7 @@ El.get = function(el){
 };
 
 El.addToCache = function(el, id){
-    id = id || el.id;    
+    id = id || el.id;
     EC[id] = {
         el:  el,
         data: {},
