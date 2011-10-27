@@ -1,0 +1,16 @@
+27-10-2011: Evgeniy Sokolov (ewgraf@gmail.com)
+Tag: fork-3.1.0
+
+New functional:
+	Ext.redirect - redirect user to another url
+	Ext.selectOne - shortcut to Ext.select(...).item(0)
+	Ext.util.RussianText - help methods for output rissian texts
+	Element.setValue
+	Element.getDom
+	Element.getInnerHtml
+	Element.clone
+	Element.hasAttribute
+	Element.removeAttribute
+	Element.setChecked
+	Element.submit
+
