@@ -6198,6 +6198,11 @@ El.prototype = {
      */
     removeAttribute : function(attribute){
     	this.dom.removeAttribute(attribute);
+
+    	if (attribute == 'value' || attribute == 'checked') {
+    		delete this.dom[attribute];
+    	}
+
     	return this;
     },
 
