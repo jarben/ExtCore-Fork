@@ -1,3 +1,10 @@
+/*!
+ * Ext Core Library 3.0
+ * http://extjs.com/
+ * Copyright(c) 2006-2009, Ext JS, LLC.
+ * 
+ * MIT Licensed - http://extjs.com/license/mit.txt
+ */
 /**
  * @class Ext.CompositeElementLite
  * <p>This class encapsulates a <i>collection</i> of DOM elements, providing methods to filter

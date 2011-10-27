@@ -1,3 +1,10 @@
+/*!
+ * Ext Core Library 3.0
+ * http://extjs.com/
+ * Copyright(c) 2006-2009, Ext JS, LLC.
+ * 
+ * MIT Licensed - http://extjs.com/license/mit.txt
+ */
 /**
  * @class Ext.DomHelper
  * <p>The DomHelper class provides a layer of abstraction from DOM and transparently supports creating
